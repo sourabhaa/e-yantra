@@ -45,15 +45,13 @@ def get_vision_sensor_image():
     global client_id
     vision_sensor_image = []
     image_resolution = []
-    return_code = 0
-   
+    return_code = 0   
     return_code,v0=sim.simxGetObjectHandle(client_id,'vision_sensor_1',sim.simx_opmode_oneshot_wait) 
     return_code, image_resolution,image = sim.simxGetVisionSensorImage(client_id, v0, 0, sim.simx_opmode_oneshot_wait)
     vision_sensor_image = np.array(image,dtype = np.uint8)
     vision_sensor_image.resize([image_resolution[0],image_resolution[1],3])
-    print(vision_sensor_image)
-    cv2.imshow('transformed image',vision_sensor_image)
     return vision_sensor_image, image_resolution, return_code
+
 
 
 if __name__ == "__main__":
