@@ -52,13 +52,30 @@ def get_vision_sensor_image():
     vision_sensor_image.resize([image_resolution[0],image_resolution[1],3])
     return vision_sensor_image, image_resolution, return_code
 
+def transform_vision_sensor_image(vision_sensor_image, image_resolution):
+    transformed_image = None
+    vision_sensor_image = np.array(vision_sensor_image,dtype = np.uint8)
+    vision_sensor_image.resize([image_resolution[0],image_resolution[1],3])
+    rgb_image = cv2.cvtColor(vision_sensor_image,cv2.COLOR_BGR2RGB)
+    transformed_image = np.rot90(rgb_image)
+    cv2.imshow("rgb",rgb_image)
+    cv2.imshow("rot",transformed_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return transformed_image    
 
 
 if __name__ == "__main__":
-    client_id = init_remote_api_server()
-    print (client_id)
-    return_code=start_simulation()
-    print(return_code)
-    time.sleep(1) #
-    get_vision_sensor_image()
-    stop_simulation()
+	client_id = init_remote_api_server() 
+	print (client_id)
+	return_code=start_simulation()
+	print(return_code)
+	time.sleep(1)
+	vision_sensor_image, image_resolution, return_codee = get_vision_sensor_image()
+	transformed_image = transform_vision_sensor_image(vision_sensor_image, image_resolution)
+	# print(vision_sensor_image)
+	# print("1---------------------")
+	# print(image_resolution)
+	# print("2---------------------")
+	# print(return_codee )
+	stop_simulation()
