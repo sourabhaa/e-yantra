@@ -195,11 +195,13 @@ def scan_image(warped_image):
                     adata.append([color,cX,cY])
                 else:
                     shapes['Circle']=[color,cX,cY]
-                # print("30..")
+                #   print("30..")
+                # print("adata:",adata)
+    
     if c>1:
         adata.sort()
         shapes[shape]=adata    
-
+    # print("c:",c)
     # print("31..")
     # res=sorted(shapes.items(), key=lambda t: t[1][1], reverse = True)
     # print("32..")
