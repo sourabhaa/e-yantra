@@ -122,7 +122,7 @@ def applyPerspectiveTransform(input_img):
 	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     # blur = cv2.GaussianBlur(gray, (5, 5), 0)
     # canny = cv2.Canny(blur,195,255)
-	_, bin = cv2.threshold(gray,235,255,0) #parameter 0 is to invert the threshold
+	_, bin = cv2.threshold(gray,245,255,0) #parameter 0 is to invert the threshold , tresh vals shd b 245,255 else it wont work fine
 	bin = cv2.dilate(bin, None) 
 	bin = cv2.dilate(bin, None)
 	bin = cv2.erode(bin, None)  

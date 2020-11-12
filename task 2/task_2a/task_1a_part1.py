@@ -81,6 +81,7 @@ def scan_image(warped_image):
 
     global shapes
     c=0
+
     ##############	ADD YOUR CODE HERE	##############
     shapes = dict()
     # print("1..")
@@ -205,7 +206,7 @@ def scan_image(warped_image):
     if c>1:
         adata.sort()
         shapes[shape]=adata    
-
+    # print("c:",c)
     # print("31..")
     # res=sorted(shapes.items(), key=lambda t: t[1][1], reverse = True)
     # print("32..")
