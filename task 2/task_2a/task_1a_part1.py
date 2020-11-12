@@ -81,6 +81,7 @@ def scan_image(warped_image):
 
     global shapes
     c=0
+
     ##############	ADD YOUR CODE HERE	##############
     shapes = dict()
     # print("1..")
@@ -191,10 +192,14 @@ def scan_image(warped_image):
             if color!='none':
                 c+=1
                 shape = "Circle"
-                if c>1:
-                    adata.append([color,cX,cY])
-                else:
+                if c==1:
                     shapes['Circle']=[color,cX,cY]
+                    adata.append([color,cX,cY])
+                    
+                elif c >1:
+                    adata.append([color,cX,cY])
+
+                    
                 #   print("30..")
                 # print("adata:",adata)
     
