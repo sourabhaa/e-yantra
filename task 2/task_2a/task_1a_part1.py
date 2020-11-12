@@ -189,7 +189,7 @@ def scan_image(warped_image):
                 shapes["Hexagon"]=[color,cX,cY]
                 # print("/29..")
         else:
-            if color!='none':
+           if color!='none':
                 c+=1
                 shape = "Circle"
                 if c==1:
