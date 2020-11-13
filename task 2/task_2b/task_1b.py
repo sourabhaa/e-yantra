@@ -58,22 +58,22 @@ def blockwork(img,coordinate):
 	lc=0
 	rc=0
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-3,int(size-1)):
+		for j in range (int(size-1)-5,int(size-1)):
 			s=block [j,i]
 			if s[0]==0 or s[1]==0 or s[2]==0:
 				dc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,4):
+		for j in range (0,5):
 			n=block [j,i]
 			if n[0]==0 or n[1]==0 or n[2]==0:
 				uc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-3,int(size-1)):
+		for j in range (int(size-1)-5,int(size-1)):
 			e=block [i,j]
 			if e[0]==0 or e[1]==0 or e[2]==0:
 				rc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,4):
+		for j in range (0,5):
 			w=block [i,j]
 			if w[0]==0 or w[1]==0 or w[2]==0:
 				lc+=1
@@ -118,50 +118,30 @@ def applyPerspectiveTransform(input_img):
 	
 	# img = cv2.imread("maze04.jpg")
 	img=input_img
-    
 	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-    # blur = cv2.GaussianBlur(gray, (5, 5), 0)
-    # canny = cv2.Canny(blur,195,255)
-	_, bin = cv2.threshold(gray,235,255,0) #parameter 0 is to invert the threshold
+	gray = cv2.GaussianBlur(gray, (5, 5), 0)
+	_, bin = cv2.threshold(gray,105,255,1) 
 	bin = cv2.dilate(bin, None) 
 	bin = cv2.dilate(bin, None)
 	bin = cv2.erode(bin, None)  
 	bin = cv2.erode(bin, None)
-	contours = cv2.findContours(bin, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    # for cnt in contours:
-    #     approx = cv2.approxPolyDP(cnt, 0.009 * cv2.arcLength(cnt, True), True) 
-        # print(len(approx))
-        # if len(approx) == 4:
+	contours, hierarchy = cv2.findContours(bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+
 	rc = cv2.minAreaRect(contours[0])
-	#it's throwing the error from this above line 
 	box = cv2.boxPoints(rc)
 	x=[]
 	y=[]
 	for p in box:
-		# pt = (p[0],p[1])
 		x.append(p[0])
-		y.append(p[1])
-    #     cv2.circle(bin,pt,5,(200,0,0),2)
-    #     print (pt)
-    # print("x:",x)
-    # print("y:",y)
-	pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]-2.5],[x[3]+2.5,y[3]+2.5]]) #this is specific for cropping maze
-    # pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]]) #ideal condition
-	# pts1 = np.float32([[x[0],y[0]],[x[3],y[3]],[x[1],y[1]],[x[2],y[2]]]) #this change is specific for task2a (ballbalance platform)
+		y.append(p[1])	
+	# pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]])
+	pts1 = np.float32([[x[1]-4,y[1]-4],[x[2]+4,y[2]-4],[x[0]-4,y[0]+4],[x[3]+4,y[3]+4]])
 	pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]])
 	M = cv2.getPerspectiveTransform(pts1,pts2)
 	warped_img = cv2.warpPerspective(img,M,(500,500))
-	# warped_image= cv2.resize(dst, (1280,1280), interpolation=cv2.INTER_CUBIC)
-    # cv2.imshow("img", img)
-    # cv2.imshow("per", dst)
-    # cv2.imshow("gray", gray)
-    # cv2.imshow("bin", bin)
-    # cv2.imshow("w", w)
-    # cv2.waitKey()
-    # if cv2.waitKey(0) & 0xFF == ord('q'):  
-    #     cv2.destroyAllWindows() 
+
 	##################################################
-	# its showing that applyPerspectiveTransform() in noy returning in expected output i.e "np.ndarray"
+
 	return warped_img
 
 

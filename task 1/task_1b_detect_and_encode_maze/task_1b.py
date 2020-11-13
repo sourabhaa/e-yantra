@@ -58,22 +58,22 @@ def blockwork(img,coordinate):
 	lc=0
 	rc=0
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-3,int(size-1)):
+		for j in range (int(size-1)-5,int(size-1)):
 			s=block [j,i]
 			if s[0]==0 or s[1]==0 or s[2]==0:
 				dc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,4):
+		for j in range (0,5):
 			n=block [j,i]
 			if n[0]==0 or n[1]==0 or n[2]==0:
 				uc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-3,int(size-1)):
+		for j in range (int(size-1)-5,int(size-1)):
 			e=block [i,j]
 			if e[0]==0 or e[1]==0 or e[2]==0:
 				rc+=1
 	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,4):
+		for j in range (0,5):
 			w=block [i,j]
 			if w[0]==0 or w[1]==0 or w[2]==0:
 				lc+=1
@@ -134,6 +134,7 @@ def applyPerspectiveTransform(input_img):
 	for p in box:
 		x.append(p[0])
 		y.append(p[1])	
+	# pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]])
 	pts1 = np.float32([[x[1]-3,y[1]-3],[x[2]+3,y[2]-3],[x[0]-3,y[0]-3],[x[3]+3,y[3]+3]])
 	pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]])
 	M = cv2.getPerspectiveTransform(pts1,pts2)
