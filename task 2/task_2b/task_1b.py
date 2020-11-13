@@ -127,7 +127,7 @@ def applyPerspectiveTransform(input_img):
 	bin = cv2.dilate(bin, None)
 	bin = cv2.erode(bin, None)  
 	bin = cv2.erode(bin, None)
-	contours, hierarchy = cv2.findContours(bin, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+	contours = cv2.findContours(bin, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     # for cnt in contours:
     #     approx = cv2.approxPolyDP(cnt, 0.009 * cv2.arcLength(cnt, True), True) 
         # print(len(approx))
@@ -137,20 +137,20 @@ def applyPerspectiveTransform(input_img):
 	x=[]
 	y=[]
 	for p in box:
-		pt = (p[0],p[1])
+		# pt = (p[0],p[1])
 		x.append(p[0])
 		y.append(p[1])
     #     cv2.circle(bin,pt,5,(200,0,0),2)
     #     print (pt)
     # print("x:",x)
     # print("y:",y)
-    # pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]-2.5],[x[3]+2.5,y[3]+2.5]])
-    # pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]])
-	pts1 = np.float32([[x[0],y[0]],[x[3],y[3]],[x[1],y[1]],[x[2],y[2]]])
+	pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]-2.5],[x[3]+2.5,y[3]+2.5]]) #this is specific for cropping maze
+    # pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]]) #ideal condition
+	# pts1 = np.float32([[x[0],y[0]],[x[3],y[3]],[x[1],y[1]],[x[2],y[2]]]) #this change is specific for task2a (ballbalance platform)
 	pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]])
 	M = cv2.getPerspectiveTransform(pts1,pts2)
-	dst = cv2.warpPerspective(img,M,(500,500))
-	warped_image= cv2.resize(dst, (1280,1280), interpolation=cv2.INTER_CUBIC)
+	warped_img = cv2.warpPerspective(img,M,(500,500))
+	# warped_image= cv2.resize(dst, (1280,1280), interpolation=cv2.INTER_CUBIC)
     # cv2.imshow("img", img)
     # cv2.imshow("per", dst)
     # cv2.imshow("gray", gray)
