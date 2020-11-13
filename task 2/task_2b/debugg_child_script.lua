@@ -16,4 +16,4 @@ end
 
 function createMaze(  )
 	-- body
-end
+ends

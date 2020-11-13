@@ -160,7 +160,7 @@ def applyPerspectiveTransform(input_img):
     # if cv2.waitKey(0) & 0xFF == ord('q'):  
     #     cv2.destroyAllWindows() 
 	##################################################
-
+	# its showing that applyPerspectiveTransform() in noy returning in expected output i.e "np.ndarray"
 	return warped_img
 
 
