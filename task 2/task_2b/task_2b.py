@@ -598,7 +598,7 @@ if __name__ == "__main__":
 						print('\n[ERROR] applyPerspectiveTransform function in \'task_1b.py\' is not returning the warped maze image in expected format!, check the code.')
 						print()
 						sys.exit()
-
+					# its throwing error here... 
 				except Exception:
 					print('\n[ERROR] Your applyPerspectiveTransform function in \'task_1b.py\' throwed an Exception, kindly debug your code!')
 					traceback.print_exc(file=sys.stdout)
