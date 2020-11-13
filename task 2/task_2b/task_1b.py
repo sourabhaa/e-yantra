@@ -133,6 +133,7 @@ def applyPerspectiveTransform(input_img):
         # print(len(approx))
         # if len(approx) == 4:
 	rc = cv2.minAreaRect(contours[0])
+	#it's throwing the error from this above line 
 	box = cv2.boxPoints(rc)
 	x=[]
 	y=[]
