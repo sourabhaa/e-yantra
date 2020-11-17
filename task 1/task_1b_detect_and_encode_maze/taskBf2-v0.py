@@ -279,72 +279,84 @@ def blockwork(img,coordinate,count):
 	print("h0:",h0)
 	if count > 1 and count <10:
 		block = img[h0:h+3,w0-3:w+3]
-		csize = 53
-		rsize = 53
+		print("entered 1-10")
+		csize = (h+3)-(h0)
+		rsize = (w+3)-(w0-3)
 	elif count == 1 :
 		block = img[h0:h+6,w0:w+6]
-		rsize = 56
-		csize = 56
+		rsize = (w+6)-(w0)
+		csize = (h+6)-h0
 	elif count > 91 and count < 100:
 		block = img[h0-3:h,w0-3:w+3]
-		csize = 53
-		rsize = 56
-	elif 11% count == 11 or count == 11:		
+		rsize = (w+3)-(w0-3)
+		csize = (h)-(h0-3)
+	elif count == 11 or count == 21 or count == 31 or count == 41 or count == 51 or count == 61 or count == 71 or count == 81 or count == 91:		
 		if count == 91 :
-			block = img[h0-3:h+3,w0:w+3]
-			csize = 56
-			rsize = 53
+			block = img[h0-3:h,w0:w+3]
+			csize = (h)-h0-3
+			rsize = (w+3)-w0
 		else:
 			print("11gde")
-			block = img[h0:h,w0:w0]
-			csize = 50
-			rsize = 50
+			block = img[h0-3:h+3,w0:w+4]
+			csize = (h+3)-(h0-3)
+			rsize = (w+4)-(w0)
+			print("cs:",csize)
+			print("rs",rsize)
 
 	elif count % 10 == 0 :
 		if count == 10:
 			block = img[h0:h+3,w0-3:w]	
-			rsize = 53
-			csize = 53
+			rsize = (w)-(w0-3)
+			csize = (h+3)-(h0)
 		elif count == 100:
 			block = img[h0-3:h,w0-3:w]
-			rsize = 53
-			csize = 53
+			csize = (h)-(h0-3)
+			rsize = (w)-(w0-3)
 		else:
 			block = img[h0-3:h+3,w0-3:w]
-			csize = 56
-			rsize = 53
+			csize = (h+3)-(h0-3)
+			rsize =(w)-(w0-3)
 	else :
 		block = img[h0-3:h+3,w0-3:w+3]
-		csize = 56
-		rsize = 56
+		csize = (h+3)-(h0-3)
+		print(csize)
+		rsize = (w+3)-(w0-3)
 
 	val=0
 	dc=0
 	uc=0
 	lc=0
 	rc=0
-	for i in range (int(rsize/2)-10,int(rsize/2)+10):
-		for j in range (int(csize-1)-10,int(csize-1)):	
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (int(csize-1)-13,int(csize-1)):	
 		
 			s=block [j,i]
 			if s[0]==0 or s[1]==0 or s[2]==0:
 				dc+=1
-	for i in range (int(rsize/2)-10,int(rsize/2)+10):
-		for j in range (0,10):
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (0,13):
 			n=block [j,i]
 			if n[0]==0 or n[1]==0 or n[2]==0:
 				uc+=1
-	for i in range (int(csize/2)-10,int(csize/2)+10):
-		for j in range (int(rsize-1)-10,int(rsize-1)):
+	# for i in range (int(rsize-1)-13,int(rsize-1)):
+	# 	for j in range (int(csize/2)-9,int(csize/2)+9):
+		
+	for i in range (int(csize/2)-12,int(csize/2)+12):
+		for j in range (int(rsize-1)-13,int(rsize-1)):
+			# print("i:",i)
+			# print("j:",j)
 			e=block [i,j]
+			print(e)
 			if e[0]==0 or e[1]==0 or e[2]==0:
 				rc+=1
-	for i in range (int(csize/2)-10,int(csize/2)+10):
-		for j in range (0,10):
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (0,13):
 			w=block [i,j]
 			if w[0]==0 or w[1]==0 or w[2]==0:
 				lc+=1
-	cv2.imshow('image',block)
+	print("cb:",count)
+	cv2.imshow('image ',block)
+	print("ca:",count)
 
 	print("=========================================================")
 
@@ -532,7 +544,7 @@ if __name__ == "__main__":
 	img_dir_path = 'test_cases/'
 
 	# path to 'maze00.jpg' image file
-	file_num = 2
+	file_num = 3
 	img_file_path = img_dir_path + 'maze0' + str(file_num) + '.jpg'
 
 	print('\n============================================')
