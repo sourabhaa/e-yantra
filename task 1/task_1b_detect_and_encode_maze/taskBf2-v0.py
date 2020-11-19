@@ -364,27 +364,27 @@ def blockwork(img,coordinate,count):
 				lc+=1
 	# print("cb:",count)
 	# if count == 91:
-	# cv2.imshow('image ',block)
-	# print("ca:",count)
+	cv2.imshow('image ',block)
+	print("ca:",count)
 
-	# print("=========================================================")
+	print("=========================================================")
 
-	# print (dc,rc,uc,lc)
+	print (dc,rc,uc,lc)
 	if dc>10:
 		val +=8
-		# print("d = 8")
+		print("d = 8")
 	if rc>10:
 		val+=4
-		# print("r = 4")
+		print("r = 4")
 	if uc>10:
 		val+=2
-		# print("u = 2")
+		print("u = 2")
 	if lc>10:
 		val+=1
-		# print("l = 1")
+		print("l = 1")
 
-	# print("total val: ",val)
-	# print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+	print("total val: ",val)
+	print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 	
@@ -481,7 +481,7 @@ def detectMaze(warped_img):
 	img= warped_img
 
 	_, img = cv2.threshold(img,124,255,cv2.THRESH_BINARY)
-	# cv2.imshow("w",img)
+	cv2.imshow("w",img)
 	binary_img = img
 	
 	# cv2.waitKey(0)
