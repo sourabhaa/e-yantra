@@ -275,17 +275,18 @@ def blockwork(img,coordinate,count):
 	w = CELL_SIZE*(coordinate[1]+1)
 	h0= CELL_SIZE*coordinate[0]
 	w0= CELL_SIZE*coordinate[1]
-	print("h:",h)
-	print("h0:",h0)
+	# print("h:",h)
+	# print("h0:",h0)
 	if count > 1 and count <10:
 		block = img[h0:h+3,w0-3:w+3]
-		print("entered 1-10")
+		# print("entered 1-10")
 		csize = (h+3)-(h0)
+		# print("csize:",csize)
 		rsize = (w+3)-(w0-3)
 	elif count == 1 :
 		block = img[h0:h+6,w0:w+6]
 		rsize = (w+6)-(w0)
-		csize = (h+6)-h0
+		csize = (h+6)-(h0)
 	elif count > 91 and count < 100:
 		block = img[h0-3:h,w0-3:w+3]
 		rsize = (w+3)-(w0-3)
@@ -293,15 +294,16 @@ def blockwork(img,coordinate,count):
 	elif count == 11 or count == 21 or count == 31 or count == 41 or count == 51 or count == 61 or count == 71 or count == 81 or count == 91:		
 		if count == 91 :
 			block = img[h0-3:h,w0:w+3]
-			csize = (h)-h0-3
+			csize = (h)-(h0-3)
+			# print("csize:",csize)
 			rsize = (w+3)-w0
 		else:
-			print("11gde")
+			# print("11gde")
 			block = img[h0-3:h+3,w0:w+4]
 			csize = (h+3)-(h0-3)
 			rsize = (w+4)-(w0)
-			print("cs:",csize)
-			print("rs",rsize)
+			# print("cs:",csize)
+			# print("rs",rsize)
 
 	elif count % 10 == 0 :
 		if count == 10:
@@ -319,7 +321,7 @@ def blockwork(img,coordinate,count):
 	else :
 		block = img[h0-3:h+3,w0-3:w+3]
 		csize = (h+3)-(h0-3)
-		print(csize)
+		# print(csize)
 		rsize = (w+3)-(w0-3)
 
 	val=0
@@ -336,6 +338,12 @@ def blockwork(img,coordinate,count):
 	for i in range (int(rsize/2)-9,int(rsize/2)+9):
 		for j in range (0,13):
 			n=block [j,i]
+			
+			# print("entered d")
+			# print("i:",i)
+			# print("j:",j)
+			# print(n)
+
 			if n[0]==0 or n[1]==0 or n[2]==0:
 				uc+=1
 	# for i in range (int(rsize-1)-13,int(rsize-1)):
@@ -346,7 +354,7 @@ def blockwork(img,coordinate,count):
 			# print("i:",i)
 			# print("j:",j)
 			e=block [i,j]
-			print(e)
+			# print(e)
 			if e[0]==0 or e[1]==0 or e[2]==0:
 				rc+=1
 	for i in range (int(rsize/2)-9,int(rsize/2)+9):
@@ -354,28 +362,29 @@ def blockwork(img,coordinate,count):
 			w=block [i,j]
 			if w[0]==0 or w[1]==0 or w[2]==0:
 				lc+=1
-	print("cb:",count)
-	cv2.imshow('image ',block)
-	print("ca:",count)
+	# print("cb:",count)
+	# if count == 91:
+	# cv2.imshow('image ',block)
+	# print("ca:",count)
 
-	print("=========================================================")
+	# print("=========================================================")
 
-	print (dc,rc,uc,lc)
+	# print (dc,rc,uc,lc)
 	if dc>10:
 		val +=8
-		print("d = 8")
+		# print("d = 8")
 	if rc>10:
 		val+=4
-		print("r = 4")
+		# print("r = 4")
 	if uc>10:
 		val+=2
-		print("u = 2")
+		# print("u = 2")
 	if lc>10:
 		val+=1
-		print("l = 1")
+		# print("l = 1")
 
-	print("total val: ",val)
-	print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+	# print("total val: ",val)
+	# print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 	cv2.waitKey(0)
 	cv2.destroyAllWindows()
 	
@@ -428,10 +437,10 @@ def applyPerspectiveTransform(input_img):
 	for p in box:
 		x.append(p[0])
 		y.append(p[1])	
-	print("y3:",y[0])
+	# print("y3:",y[0])
 	# pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]])
 	# pts1 = np.float32([[x[1]-3,y[1]-3],[x[2]+3,y[2]-3],[x[0]-3,y[0]+4],[x[3]+3,y[3]+3]])
-	pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]+2.5],[x[3]+2.5,y[3]+2.5]])
+	# pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]+2.5],[x[3]+2.5,y[3]+2.5]])
 	# pts1 = np.float32([[x[1]-3,y[1]-3],[x[2]+3,y[2]-3],[x[0]-3,y[0]+4],[x[3]+3,y[3]+3]])
 	pts1 = np.float32([[x[1]-2,y[1]-2],[x[2]+2,y[2]-2],[x[0]-2,y[0]+2],[x[3]+2,y[3]+2]])
 	pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]])
@@ -472,7 +481,7 @@ def detectMaze(warped_img):
 	img= warped_img
 
 	_, img = cv2.threshold(img,124,255,cv2.THRESH_BINARY)
-	cv2.imshow("w",img)
+	# cv2.imshow("w",img)
 	binary_img = img
 	
 	# cv2.waitKey(0)
@@ -488,7 +497,7 @@ def detectMaze(warped_img):
 		for j in range(no_cells_width):
 			sz = [i,j]
 			count+=1
-			print("count : ",count)
+			# print("count : ",count)
 			val= blockwork(img, sz,count)
 			
 			

@@ -43,48 +43,124 @@ import csv
 ## readable and easy to understand.                         ##
 ##############################################################
 CELL_SIZE=50
-def blockwork(img,coordinate):
-
-	size =CELL_SIZE
+def blockwork(img,coordinate,count):
+# size =CELL_SIZE
 	h = CELL_SIZE*(coordinate[0]+1)
 	w = CELL_SIZE*(coordinate[1]+1)
 	h0= CELL_SIZE*coordinate[0]
 	w0= CELL_SIZE*coordinate[1]
-	block = img[h0:h,w0:w]
-	
+	# print("h:",h)
+	# print("h0:",h0)
+	if count > 1 and count <10:
+		block = img[h0:h+3,w0-3:w+3]
+		# print("entered 1-10")
+		csize = (h+3)-(h0)
+		# print("csize:",csize)
+		rsize = (w+3)-(w0-3)
+	elif count == 1 :
+		block = img[h0:h+6,w0:w+6]
+		rsize = (w+6)-(w0)
+		csize = (h+6)-(h0)
+	elif count > 91 and count < 100:
+		block = img[h0-3:h,w0-3:w+3]
+		rsize = (w+3)-(w0-3)
+		csize = (h)-(h0-3)
+	elif count == 11 or count == 21 or count == 31 or count == 41 or count == 51 or count == 61 or count == 71 or count == 81 or count == 91:		
+		if count == 91 :
+			block = img[h0-3:h,w0:w+3]
+			csize = (h)-(h0-3)
+			# print("csize:",csize)
+			rsize = (w+3)-w0
+		else:
+			# print("11gde")
+			block = img[h0-3:h+3,w0:w+4]
+			csize = (h+3)-(h0-3)
+			rsize = (w+4)-(w0)
+			# print("cs:",csize)
+			# print("rs",rsize)
+
+	elif count % 10 == 0 :
+		if count == 10:
+			block = img[h0:h+3,w0-3:w]	
+			rsize = (w)-(w0-3)
+			csize = (h+3)-(h0)
+		elif count == 100:
+			block = img[h0-3:h,w0-3:w]
+			csize = (h)-(h0-3)
+			rsize = (w)-(w0-3)
+		else:
+			block = img[h0-3:h+3,w0-3:w]
+			csize = (h+3)-(h0-3)
+			rsize =(w)-(w0-3)
+	else :
+		block = img[h0-3:h+3,w0-3:w+3]
+		csize = (h+3)-(h0-3)
+		# print(csize)
+		rsize = (w+3)-(w0-3)
+
 	val=0
 	dc=0
 	uc=0
 	lc=0
 	rc=0
-	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-10,int(size-1)):
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (int(csize-1)-13,int(csize-1)):	
+		
 			s=block [j,i]
 			if s[0]==0 or s[1]==0 or s[2]==0:
 				dc+=1
-	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,10):
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (0,13):
 			n=block [j,i]
+			
+			# print("entered d")
+			# print("i:",i)
+			# print("j:",j)
+			# print(n)
+
 			if n[0]==0 or n[1]==0 or n[2]==0:
 				uc+=1
-	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (int(size-1)-10,int(size-1)):
+	# for i in range (int(rsize-1)-13,int(rsize-1)):
+	# 	for j in range (int(csize/2)-9,int(csize/2)+9):
+		
+	for i in range (int(csize/2)-12,int(csize/2)+12):
+		for j in range (int(rsize-1)-13,int(rsize-1)):
+			# print("i:",i)
+			# print("j:",j)
 			e=block [i,j]
+			# print(e)
 			if e[0]==0 or e[1]==0 or e[2]==0:
 				rc+=1
-	for i in range (int(size/2)-10,int(size/2)+10):
-		for j in range (0,10):
+	for i in range (int(rsize/2)-9,int(rsize/2)+9):
+		for j in range (0,13):
 			w=block [i,j]
 			if w[0]==0 or w[1]==0 or w[2]==0:
 				lc+=1
+	# print("cb:",count)
+	# if count == 91:
+	# cv2.imshow('image ',block)
+	# print("ca:",count)
+
+	# print("=========================================================")
+
+	# print (dc,rc,uc,lc)
 	if dc>10:
 		val +=8
+		# print("d = 8")
 	if rc>10:
 		val+=4
+		# print("r = 4")
 	if uc>10:
 		val+=2
+		# print("u = 2")
 	if lc>10:
 		val+=1
+		# print("l = 1")
+
+	# print("total val: ",val)
+	# print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
 	
 	return  val
 ##############################################################
@@ -115,8 +191,6 @@ def applyPerspectiveTransform(input_img):
 	warped_img = None
 
 	##############	ADD YOUR CODE HERE	##############
-	
-	# img = cv2.imread("maze04.jpg")
 	img=input_img
 	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 	gray = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -128,15 +202,19 @@ def applyPerspectiveTransform(input_img):
 	contours, hierarchy = cv2.findContours(bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 	rc = cv2.minAreaRect(contours[0])
+
 	box = cv2.boxPoints(rc)
 	x=[]
 	y=[]
 	for p in box:
 		x.append(p[0])
 		y.append(p[1])	
+	# print("y3:",y[0])
 	# pts1 = np.float32([[x[1],y[1]],[x[2],y[2]],[x[0],y[0]],[x[3],y[3]]])
-	# pts1 = np.float32([[x[1]-4,y[1]-4],[x[2]+4,y[2]-4],[x[0]-4,y[0]-4],[x[3]+4,y[3]+4]])
-	pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]-2.5],[x[3]+2.5,y[3]+2.5]])
+	# pts1 = np.float32([[x[1]-3,y[1]-3],[x[2]+3,y[2]-3],[x[0]-3,y[0]+4],[x[3]+3,y[3]+3]])
+	# pts1 = np.float32([[x[1]-2.5,y[1]-2.5],[x[2]+2.5,y[2]-2.5],[x[0]-2.5,y[0]+2.5],[x[3]+2.5,y[3]+2.5]])
+	# pts1 = np.float32([[x[1]-3,y[1]-3],[x[2]+3,y[2]-3],[x[0]-3,y[0]+4],[x[3]+3,y[3]+3]])
+	pts1 = np.float32([[x[1]-2,y[1]-2],[x[2]+2,y[2]-2],[x[0]-2,y[0]+2],[x[3]+2,y[3]+2]])
 	pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]])
 	M = cv2.getPerspectiveTransform(pts1,pts2)
 	warped_img = cv2.warpPerspective(img,M,(500,500))
@@ -178,20 +256,22 @@ def detectMaze(warped_img):
 	# cv2.imshow("w",img)
 	binary_img = img
 	
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
+	# cv2.waitKey(0)
+	# cv2.destroyAllWindows()
 	height, width,x= binary_img.shape
 	no_cells_height = int(height/CELL_SIZE)							
 	no_cells_width = int(width/CELL_SIZE)								
 	# cb=0
 	# ca=0y
+	count=0
 	maze_array = []
 	for i in range (no_cells_height):
 		maze_array.append([])
 		for j in range(no_cells_width):
 			sz = [i,j]
+			count+=1
 			# cb+=1
-			val= blockwork(img, sz)
+			val= blockwork(img, sz,count)
 			maze_array [i].append(val)
 	
 	##################################################
